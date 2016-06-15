@@ -2,25 +2,23 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-import time
-from pytrends.pyGTrends import pyGTrends
-from random import randint
 
 __author__='Lucy Shen'
 
 """
-Python scraping script for Google Trends using a pseudo API pytrends.
+Simple script to check if gtrends sample outputs are identical.
 
-Example command-line call: python gtrends_scrape.py 'coffee, weather'
+Example command-line call: python check_sample_equal.py directory/name'
 """
 
 def main(keywords):
     google_username = "lshen.api@gmail.com"
     google_password = "googletrends"
-    path = ""
+    path = "data/"
     # regions = ['US-AK-743', 'US-AK-745', 'US-AK-747']
     regions = ['US-AK-743']
     sample_counter = 1
+    timeframe = '01/2004 48m' # Jan 2004 to Dec 2007
 
     # connect to Google
     connector = pyGTrends(google_username, google_password)
@@ -30,7 +28,7 @@ def main(keywords):
     # make request
     for region in regions:
         while sample_counter < 10:
-            connector.request_report(keywords, hl='en-US', geo=region)
+            connector.request_report(keywords, hl='en-US', geo=region, date=timeframe)
             print "waiting..."
             time.sleep(randint(5, 10))
             print "saving..."
